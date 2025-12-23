@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fanta - Spin to Win!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="wheel.css" />
+    <link rel="stylesheet" href="social-proof.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-container">
+        <div class="header-logo">
+          <img src="assets/logo.png" alt="Fanta" class="logo-image" />
+          <div id="country-flag" class="country-flag"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-container">
+      <h1 class="game-title">Spin to Win!</h1>
+      <p class="game-subtitle">
+        Celebrate Fanta's 28th Anniversary with amazing prizes!
+      </p>
+
+      <div class="wheel-wrapper">
+        <div class="wheel-pointer"></div>
+        <canvas id="wheel-canvas" width="500" height="500"></canvas>
+      </div>
+
+      <button id="spin-button" class="spin-button">SPIN NOW</button>
+    </main>
+
+    <div id="modal-overlay" class="modal-overlay">
+      <div class="modal-content">
+        <h2 class="modal-title">Congratulations!</h2>
+        <div id="modal-prize-image-container" style="margin-bottom: 15px">
+          <img
+            id="modal-prize-image"
+            src=""
+            alt="Prize"
+            style="max-width: 150px; display: none"
+          />
+        </div>
+        <p>You won:</p>
+        <div id="modal-prize-name" class="modal-prize-name">
+          Fanta Gift Pack
+        </div>
+        <p style="margin-bottom: 20px">
+          Claim your prize by filling out the form on the next page.
+        </p>
+        <a href="form.html" class="modal-button">CLAIM PRIZE</a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Copyright © 2025 Fanta. All rights reserved.</p>
+    </footer>
+
+    <script src="prizes.js"></script>
+    <script src="wheel.js"></script>
+    <script src="social-proof.js"></script>
+    <script>
+      // Cookie functions
+      function setCookie(name, value, days) {
+        const expires = new Date();
+        expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+        document.cookie =
+          name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
+      }
+
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === " ") c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0)
+            return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      }
+
+      // Display flag using CDN
+      function displayFlag(countryCode) {
+        const flagElement = document.getElementById("country-flag");
+        if (!flagElement) return;
+
+        if (countryCode && countryCode !== "unknown") {
+          // Use flag CDN
+          flagElement.innerHTML = `<img src="https://flagcdn.com/20x15/${countryCode.toLowerCase()}.png" alt="${countryCode} flag" style="width: 20px; height: 15px; border-radius: 2px;">`;
+        } else {
+          // Fallback: globe icon
+          flagElement.innerHTML = '<span style="font-size: 20px;">🌍</span>';
+        }
+        flagElement.classList.add("visible");
+      }
+
+      // Get user's country and display flag
+      async function detectCountryAndShowFlag() {
+        // Check if country is already stored in cookie
+        let storedCountry = getCookie("user_country");
+
+        if (storedCountry) {
+          displayFlag(storedCountry);
+          return;
+        }
+
+        try {
+          // Use a free IP geolocation service
+          const response = await fetch("https://ipapi.co/json/");
+          const data = await response.json();
+
+          const countryCode = data.country_code || "unknown";
+
+          // Store in cookie for 30 days
+          setCookie("user_country", countryCode, 30);
+
+          displayFlag(countryCode);
+        } catch (error) {
+          console.log("Could not detect country:", error);
+          // Store unknown in cookie to avoid repeated API calls
+          setCookie("user_country", "unknown", 30);
+          displayFlag("unknown");
+        }
+      }
+
+      // Run when page loads
+      document.addEventListener("DOMContentLoaded", detectCountryAndShowFlag);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const modalOverlay = document.getElementById("modal-overlay");
+        const modalPrizeName = document.getElementById("modal-prize-name");
+
+        const wheel = new FantaWheel("wheel-canvas", {
+          spinBtnId: "spin-button",
+          onWin: (prize) => {
+            modalPrizeName.innerText = prize.shortName;
+
+            const modalPrizeImg = document.getElementById("modal-prize-image");
+            if (prize.image && modalPrizeImg) {
+              modalPrizeImg.src = prize.image;
+              modalPrizeImg.style.display = "inline-block";
+            } else if (modalPrizeImg) {
+              modalPrizeImg.style.display = "none";
+            }
+
+            modalOverlay.style.display = "flex";
+
+            // Store prize ID in cookie for 1 day
+            setCookie("won_prize_id", prize.id, 1);
+
+            // Update Claim Prize button with query string ID
+            const claimBtn = document.querySelector(".modal-button");
+            if (claimBtn) {
+              const queryParams = new URLSearchParams({
+                prize_id: prize.id,
+              });
+              claimBtn.href = `form.html?${queryParams.toString()}`;
+            }
+
+            // Longer Confetti effect
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = {
+              startVelocity: 30,
+              spread: 360,
+              ticks: 60,
+              zIndex: 3000,
+            };
+
+            const randomInRange = (min, max) =>
+              Math.random() * (max - min) + min;
+
+            const interval = setInterval(function () {
+              const timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              const particleCount = 50 * (timeLeft / duration);
+
+              confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                colors: ["#FF6600", "#ffffff"],
+              });
+              confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                colors: ["#003087", "#DC143C"],
+              });
+            }, 250);
+          },
+          onTryAgain: () => {
+            alert("Almost! Try one more time.");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
